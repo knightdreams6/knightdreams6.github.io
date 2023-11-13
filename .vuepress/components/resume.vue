@@ -53,31 +53,46 @@
 
 
 <script lang="ts" setup>
+import {onMounted, ref} from 'vue'
 
-const hostname = window.location.origin + "/resume/";
+const hostname = ref('');
+const wxImgSrc = ref('');
+const messagePushImgSrcList = ref([]);
+const apiRiskImgSrcList = ref([]);
+const storageImgSrcList = ref([]);
+const tmsStationImgSrcList = ref([]);
+const tmsMockImgSrcList = ref([]);
+const launcherImgSrcList = ref([]);
+const openImgSrcList = ref([]);
 
-const messagePushImg = ['messagePush1.jpeg', 'messagePush2.jpeg', 'messagePush3.jpeg', 'messagePush4.jpeg']
-const messagePushImgSrcList = messagePushImg.map(src => hostname + src)
+// https://v2.vuepress.vuejs.org/zh/advanced/cookbook/usage-of-client-config.html#%E4%BD%BF%E7%94%A8%E7%BB%84%E5%90%88%E5%BC%8F-api
+onMounted(() => {
+  hostname.value = window.location.origin + "/resume/"
+  
+  const messagePushImg = ['messagePush1.jpeg', 'messagePush2.jpeg', 'messagePush3.jpeg', 'messagePush4.jpeg']
+  messagePushImgSrcList.value = messagePushImg.map(src => hostname.value + src)
+  
+  const apiRiskImg = ['apiRisk1.jpeg', 'apiRisk2.jpeg']
+  apiRiskImgSrcList.value = apiRiskImg.map(src => hostname.value + src)
+  
+  const storageImg = ['storage1.jpeg', 'storage2.jpeg', 'storage3.jpeg']
+  storageImgSrcList.value = storageImg.map(src => hostname.value + src)
+  
+  const tmsStationImg = ['tmsStation1.jpeg', 'tmsStation2.jpeg', 'tmsStation3.jpeg', 'tmsStation4.jpeg']
+  tmsStationImgSrcList.value = tmsStationImg.map(src => hostname.value + src)
+  
+  const tmsMockImg = ['tmsMock1.jpeg', 'tmsMock2.jpeg', 'tmsMock3.jpeg', 'tmsMock4.jpeg']
+  tmsMockImgSrcList.value = tmsMockImg.map(src => hostname.value + src)
+  
+  const launcherImg = ['launcher1.jpeg', 'launcher2.jpeg']
+  launcherImgSrcList.value = launcherImg.map(src => hostname.value + src)
+  
+  const openImg = ['open1.jpeg', 'open2.jpeg', 'open3.jpeg', 'open4.jpeg', 'open5.jpeg', 'open6.jpeg', 'open7.jpeg']
+  openImgSrcList.value = openImg.map(src => hostname.value + src)
+  
+  wxImgSrc.value = hostname.value + 'wx.jpeg'
+})
 
-const apiRiskImg = ['apiRisk1.jpeg', 'apiRisk2.jpeg']
-const apiRiskImgSrcList = apiRiskImg.map(src => hostname + src)
-
-const storageImg = ['storage1.jpeg', 'storage2.jpeg', 'storage3.jpeg']
-const storageImgSrcList = storageImg.map(src => hostname + src)
-
-const tmsStationImg = ['tmsStation1.jpeg', 'tmsStation2.jpeg', 'tmsStation3.jpeg', 'tmsStation4.jpeg']
-const tmsStationImgSrcList = tmsStationImg.map(src => hostname + src)
-
-const tmsMockImg = ['tmsMock1.jpeg', 'tmsMock2.jpeg', 'tmsMock3.jpeg', 'tmsMock4.jpeg']
-const tmsMockImgSrcList = tmsMockImg.map(src => hostname + src)
-
-const launcherImg = ['launcher1.jpeg', 'launcher2.jpeg']
-const launcherImgSrcList = launcherImg.map(src => hostname + src)
-
-const openImg = ['open1.jpeg', 'open2.jpeg', 'open3.jpeg', 'open4.jpeg', 'open5.jpeg', 'open6.jpeg', 'open7.jpeg']
-const openImgSrcList = openImg.map(src => hostname + src)
-
-const wxImgSrc = hostname + 'wx.jpeg'
 
 </script>
 
