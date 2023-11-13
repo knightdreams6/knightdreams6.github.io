@@ -11,6 +11,7 @@
     "build": "vuepress build ."
   },
   "dependencies": {
+    "element-plus": "^2.4.2",
     "vuepress": "2.0.0-beta.67",
     "vuepress-theme-reco": "2.0.0-beta.68"
   }
