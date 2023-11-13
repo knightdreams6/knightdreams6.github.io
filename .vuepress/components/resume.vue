@@ -1,5 +1,6 @@
 <template>
   <div>
+    <a :href="resumePdf" target="_blank">点击查看附件简历</a>
     <h3>以下为简历中提到做过的部分项目/模块示例：</h3>
     <el-alert title="Tips: 点击图片查看更多" type="info"/>
     <div>
@@ -56,6 +57,7 @@
 import {onMounted, ref} from 'vue'
 
 const hostname = ref('');
+const resumePdf = ref('');
 const wxImgSrc = ref('');
 const messagePushImgSrcList = ref([]);
 const apiRiskImgSrcList = ref([]);
@@ -68,6 +70,8 @@ const openImgSrcList = ref([]);
 // https://v2.vuepress.vuejs.org/zh/advanced/cookbook/usage-of-client-config.html#%E4%BD%BF%E7%94%A8%E7%BB%84%E5%90%88%E5%BC%8F-api
 onMounted(() => {
   hostname.value = window.location.origin + "/resume/"
+  
+  resumePdf.value = hostname.value + 'resume.pdf'
   
   const messagePushImg = ['messagePush1.jpeg', 'messagePush2.jpeg', 'messagePush3.jpeg', 'messagePush4.jpeg']
   messagePushImgSrcList.value = messagePushImg.map(src => hostname.value + src)
