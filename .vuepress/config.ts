@@ -22,9 +22,9 @@ export default defineUserConfig({
 
     },
     navbar: [
-      { text: "Home", link: "/" },
-      { text: "Categories", link: "/categories/concept/1/" },
-      { text: "Tags", link: "/tags/concept/1/" },
+      { text: "简历", link: "/docs/resume.html" },
+      { text: "分类", link: "/categories/concept/1/" },
+      { text: "标签", link: "/tags/concept/1/" },
     ],
     // bulletin: {
     //   body: [
