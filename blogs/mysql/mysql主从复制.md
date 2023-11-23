@@ -1,5 +1,5 @@
 ---
-title: mysql(六)主从复制
+title: mysql主从复制
 date: 2020-10-15 09:17:15
 tags:
   - mysql
