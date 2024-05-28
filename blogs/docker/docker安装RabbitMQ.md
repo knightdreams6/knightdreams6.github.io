@@ -1,50 +1,67 @@
 ---
 title: docker安装RabbitMQ
-date: 2020-04-01 08:52:28
+date: 2024-02-16
 tags:
   - docker
-
 ---
 
-#### 1. 查找RabbitMQ镜像
+
+
+### 1. 拉取镜像
+
+dockerHub [仓库地址](https://hub.docker.com/_/rabbitmq/tags)
 
 ```shell
-docker search rabbitmq
+docker pull rabbitmq:3.9-management
 ```
 
-#### 2.拉取RabbitMQ镜像
+
+
+### 2.启动
 
 ```shell
-docker pull rabbitmq	未包含控制台
-
-docker pull rabbitmq:management  包含控制台
+docker run -d --hostname rabbitmq --name rabbitmq -p 15672:15672 -p 5672:5672 -e RABBITMQ_DEFAULT_USER=guest -e RABBITMQ_DEFAULT_PASS=guest -v ~/docker/rabbitmq:/var/lib/rabbitmq rabbitmq:3.9-management
 ```
 
-#### 3.安装rabbitMQ
+##### 设置默认用户名密码
 
 ```shell
-docker run --name rabbitmq -d -p 15672:15672 -p 5672:5672 rabbitmq:management
+-e RABBITMQ_DEFAULT_USER=user -e RABBITMQ_DEFAULT_PASS=password
 ```
 
-#### 4. 停止、启动重启
+##### 设置默认vhost
 
 ```shell
-docker stop start restart rabbitmq
+-e RABBITMQ_DEFAULT_VHOST=my_vhost
 ```
 
-启动控制台后，可以在浏览器中访问 http://ip:15672  进行访问
-
-RabbitMQ默认的用户名密码 guest
-
-
-
-#### 端口开放
+##### 数据持久化
 
 ```shell
-firewall-cmd --zone=public --add-port=8080/tcp --permanent 开启端口
+-v ~/docker/rabbitmq:/var/lib/rabbitmq
 ```
 
-> 命令含义： 
->　　　　--zone #作用域 
-> 　　　　--add-port=8080/tcp #添加端口，格式为：端口/通讯协议 
-> 　　　　--permanent #永久生效
+
+
+
+
+### 3. 延迟消息插件
+
+[下载地址](https://github.com/rabbitmq/rabbitmq-delayed-message-exchange/releases/download/3.9.0/rabbitmq_delayed_message_exchange-3.9.0.ez)
+
+```shell
+docker cp /rabbitmq_delayed_message_exchange-3.9.0.ez rabbit:/plugins
+```
+
+```shell
+docker exec -it rabbitmq /bin/bash 
+```
+
+```shell
+cd plugins
+```
+
+```shell
+rabbitmq-plugins enable rabbitmq_delayed_message_exchange
+```
+
