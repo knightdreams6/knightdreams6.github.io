@@ -3,10 +3,23 @@
     <a :href="resumePdf" target="_blank">点击查看附件简历</a>
     <h3>以下为简历中提到做过的部分项目/模块示例：</h3>
     <div>
+      <h5>Whistle短视频直播</h5>
+      <el-carousel :autoplay="false" height="800px" arrow="always">
+        <el-carousel-item v-for="item in whistleAppImgSrcList" :key="item">
+          <el-image :hide-on-click-modal="true" :src="item"
+                    :preview-src-list="whistleAppImgSrcList"
+                    :preview-teleported="true"
+                    :infinite="false"/>
+        </el-carousel-item>
+      </el-carousel>
+    </div>
+    <div>
       <h5>消息推送模块</h5>
       <el-carousel :autoplay="false" height="460px" arrow="always">
         <el-carousel-item v-for="item in messagePushImgSrcList" :key="item">
           <el-image :hide-on-click-modal="true" :src="item"
+                    :preview-src-list="messagePushImgSrcList"
+                    :preview-teleported="true"
                     :infinite="false"/>
         </el-carousel-item>
       </el-carousel>
@@ -16,6 +29,8 @@
       <el-carousel :autoplay="false" height="520px" arrow="always">
         <el-carousel-item v-for="item in apiRiskImgSrcList" :key="item">
           <el-image :hide-on-click-modal="true" :src="item"
+                    :preview-src-list="apiRiskImgSrcList"
+                    :preview-teleported="true"
                     :infinite="false"/>
         </el-carousel-item>
       </el-carousel>
@@ -25,6 +40,8 @@
       <el-carousel :autoplay="false" height="520px" arrow="always">
         <el-carousel-item v-for="item in storageImgSrcList" :key="item">
           <el-image :hide-on-click-modal="true" :src="item"
+                    :preview-src-list="storageImgSrcList"
+                    :preview-teleported="true"
                     :infinite="false"/>
         </el-carousel-item>
       </el-carousel>
@@ -34,6 +51,8 @@
       <el-carousel :autoplay="false" height="520px" arrow="always">
         <el-carousel-item v-for="item in tmsStationImgSrcList" :key="item">
           <el-image :hide-on-click-modal="true" :src="item"
+                    :preview-src-list="tmsStationImgSrcList"
+                    :preview-teleported="true"
                     :infinite="false"/>
         </el-carousel-item>
       </el-carousel>
@@ -44,6 +63,8 @@
         <el-carousel-item v-for="item in tmsMockImgSrcList" :key="item"
                           style="display: flex; justify-content: center; align-items: center">
           <el-image :hide-on-click-modal="true" :src="item"
+                    :preview-src-list="tmsMockImgSrcList"
+                    :preview-teleported="true"
                     :infinite="false"/>
         </el-carousel-item>
       </el-carousel>
@@ -53,6 +74,8 @@
       <el-carousel :autoplay="false" height="520px" arrow="always">
         <el-carousel-item v-for="item in launcherImgSrcList" :key="item">
           <el-image :hide-on-click-modal="true" :src="item"
+                    :preview-src-list="launcherImgSrcList"
+                    :preview-teleported="true"
                     :infinite="false"/>
         </el-carousel-item>
       </el-carousel>
@@ -62,16 +85,18 @@
       <el-carousel :autoplay="false" height="500px" arrow="always">
         <el-carousel-item v-for="item in openImgSrcList" :key="item">
           <el-image :hide-on-click-modal="true" :src="item"
+                    :preview-src-list="openImgSrcList"
+                    :preview-teleported="true"
                     :infinite="false"/>
         </el-carousel-item>
       </el-carousel>
     </div>
-    
+
     <div>
       <h3>感谢观看～</h3>
       <h5>联系方式：</h5>
       <ul>
-        <li>电话：18735182285</li>
+        <li>电话：17310188296</li>
         <li>微信：li1766376716</li>
       </ul>
       <el-image style="width: 400px; height: 500px" :src="wxImgSrc"/>
@@ -94,34 +119,39 @@ const tmsStationImgSrcList = ref([]);
 const tmsMockImgSrcList = ref([]);
 const launcherImgSrcList = ref([]);
 const openImgSrcList = ref([]);
+const whistleAppImgSrcList = ref([]);
 
 // https://v2.vuepress.vuejs.org/zh/advanced/cookbook/usage-of-client-config.html#%E4%BD%BF%E7%94%A8%E7%BB%84%E5%90%88%E5%BC%8F-api
 onMounted(() => {
   hostname.value = window.location.origin + "/resume/"
-  
+
   resumePdf.value = hostname.value + 'resume.pdf'
-  
+
   const messagePushImg = ['messagePush1.jpeg', 'messagePush2.jpeg', 'messagePush3.jpeg', 'messagePush4.jpeg']
   messagePushImgSrcList.value = messagePushImg.map(src => hostname.value + src)
-  
+
   const apiRiskImg = ['apiRisk1.jpeg', 'apiRisk2.jpeg']
   apiRiskImgSrcList.value = apiRiskImg.map(src => hostname.value + src)
-  
+
   const storageImg = ['storage1.jpeg', 'storage2.jpeg', 'storage3.jpeg']
   storageImgSrcList.value = storageImg.map(src => hostname.value + src)
-  
+
   const tmsStationImg = ['tmsStation1.jpeg', 'tmsStation2.jpeg', 'tmsStation3.jpeg', 'tmsStation4.jpeg']
   tmsStationImgSrcList.value = tmsStationImg.map(src => hostname.value + src)
-  
+
   const tmsMockImg = ['tmsMock1.jpeg', 'tmsMock2.jpeg', 'tmsMock3.jpeg', 'tmsMock4.jpeg']
   tmsMockImgSrcList.value = tmsMockImg.map(src => hostname.value + src)
-  
+
   const launcherImg = ['launcher1.jpeg', 'launcher2.jpeg']
   launcherImgSrcList.value = launcherImg.map(src => hostname.value + src)
-  
+
   const openImg = ['open.jpeg', 'open1.jpeg', 'open2.jpeg', 'open3.jpeg', 'open4.jpeg', 'open5.jpeg', 'open6.jpeg', 'open7.jpeg', 'open8.jpeg']
   openImgSrcList.value = openImg.map(src => hostname.value + src)
-  
+
+  const whistleImg = ['whistle_1.jpg', 'whistle_2.jpg', 'whistle_3.jpg', 'whistle_4.jpg',
+    'whistle_5.jpg', 'whistle_6.jpg', 'whistle_7.jpg', 'whistle_8.jpg', 'whistle_9.jpg']
+  whistleAppImgSrcList.value = whistleImg.map(src => hostname.value + src)
+
   wxImgSrc.value = hostname.value + 'wx.jpeg'
 })
 
