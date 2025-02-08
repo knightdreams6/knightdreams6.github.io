@@ -1,0 +1,59 @@
+import{_ as n,o as s,c as a,b as t}from"./app-306068b4.js";const p={},e=t(`<div class="language-java line-numbers-mode" data-ext="java"><pre class="language-java"><code><span class="token keyword">import</span> <span class="token import"><span class="token namespace">cn<span class="token punctuation">.</span>hutool<span class="token punctuation">.</span>core<span class="token punctuation">.</span>lang<span class="token punctuation">.</span>hash<span class="token punctuation">.</span></span><span class="token class-name">MurmurHash</span></span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token import"><span class="token namespace">cn<span class="token punctuation">.</span>hutool<span class="token punctuation">.</span>core<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">RandomUtil</span></span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token import"><span class="token namespace">lombok<span class="token punctuation">.</span></span><span class="token class-name">RequiredArgsConstructor</span></span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token import"><span class="token namespace">lombok<span class="token punctuation">.</span>extern<span class="token punctuation">.</span>slf4j<span class="token punctuation">.</span></span><span class="token class-name">Slf4j</span></span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token import"><span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>data<span class="token punctuation">.</span>redis<span class="token punctuation">.</span>core<span class="token punctuation">.</span></span><span class="token class-name">StringRedisTemplate</span></span><span class="token punctuation">;</span>
+
+<span class="token doc-comment comment">/**
+ * 用户邀请码生成
+ *
+ * <span class="token keyword">@author</span> knight
+ */</span>
+<span class="token annotation punctuation">@Slf4j</span>
+<span class="token annotation punctuation">@RequiredArgsConstructor</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UserInviteCodeGenerate</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> <span class="token constant">INVITE_CODE_KEY</span> <span class="token operator">=</span> <span class="token string">&quot;app:inviteCode:bitmap&quot;</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">int</span> <span class="token constant">CODE_LENGTH</span> <span class="token operator">=</span> <span class="token number">6</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">StringRedisTemplate</span> stringRedisTemplate<span class="token punctuation">;</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> <span class="token constant">WITHOUT_STR</span> <span class="token operator">=</span> <span class="token string">&quot;oO0lL1q9QpP&quot;</span><span class="token punctuation">;</span>
+
+    <span class="token doc-comment comment">/**
+     * 邀请码是否存在
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">exist</span><span class="token punctuation">(</span><span class="token class-name">String</span> inviteCode<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">int</span> hash <span class="token operator">=</span> <span class="token class-name">MurmurHash</span><span class="token punctuation">.</span><span class="token function">hash32</span><span class="token punctuation">(</span>inviteCode<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token class-name">Boolean</span><span class="token punctuation">.</span><span class="token constant">TRUE</span><span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>stringRedisTemplate<span class="token punctuation">.</span><span class="token function">opsForValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getBit</span><span class="token punctuation">(</span><span class="token constant">INVITE_CODE_KEY</span><span class="token punctuation">,</span> hash <span class="token operator">&amp;</span> <span class="token number">0x3FFFFFFF</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">String</span> inviteCode<span class="token punctuation">;</span>
+        <span class="token keyword">boolean</span> exists<span class="token punctuation">;</span>
+        <span class="token keyword">int</span> attempts <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// 检查邀请码是否已存在</span>
+        <span class="token keyword">do</span> <span class="token punctuation">{</span>
+            inviteCode <span class="token operator">=</span> <span class="token function">generateUserInviteCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            exists <span class="token operator">=</span> <span class="token function">exist</span><span class="token punctuation">(</span>inviteCode<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            attempts<span class="token operator">++</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">while</span> <span class="token punctuation">(</span>exists<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>attempts <span class="token operator">&gt;</span> <span class="token number">3</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            log<span class="token punctuation">.</span><span class="token function">warn</span><span class="token punctuation">(</span><span class="token string">&quot;邀请码生成次数: {}&quot;</span><span class="token punctuation">,</span> attempts<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">int</span> hash <span class="token operator">=</span> <span class="token class-name">MurmurHash</span><span class="token punctuation">.</span><span class="token function">hash32</span><span class="token punctuation">(</span>inviteCode<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 设置该邀请码为已使用</span>
+        stringRedisTemplate<span class="token punctuation">.</span><span class="token function">opsForValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">setBit</span><span class="token punctuation">(</span><span class="token constant">INVITE_CODE_KEY</span><span class="token punctuation">,</span> hash <span class="token operator">&amp;</span> <span class="token number">0x3FFFFFFF</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> inviteCode<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">private</span> <span class="token class-name">String</span> <span class="token function">generateUserInviteCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token class-name">RandomUtil</span><span class="token punctuation">.</span><span class="token function">randomStringWithoutStr</span><span class="token punctuation">(</span><span class="token constant">CODE_LENGTH</span><span class="token punctuation">,</span> <span class="token constant">WITHOUT_STR</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h5 id="为什么需要hash" tabindex="-1"><a class="header-anchor" href="#为什么需要hash" aria-hidden="true">#</a> 为什么需要hash？</h5><blockquote><p>位图（Bitmap）不能直接存储字符串</p></blockquote>`,3),o=[e];function c(i,l){return s(),a("div",null,o)}const k=n(p,[["render",c],["__file","shengchengweiyiyaoqingma.html.vue"]]);export{k as default};
