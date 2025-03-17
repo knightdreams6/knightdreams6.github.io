@@ -1,5 +1,5 @@
 ---
-title: 结构化输出转换器
+title: Spring AI结构化输出转换器
 date: 2025-02-25
 tags:
    - AI

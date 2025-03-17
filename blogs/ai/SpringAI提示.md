@@ -1,5 +1,5 @@
 ---
-title: 提示
+title: Spring AI提示
 date: 2025-02-28
 tags:
    - AI

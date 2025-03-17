@@ -1,5 +1,5 @@
 ---
-title: 人工智能概念
+title: Spring AI人工智能概念
 date: 2025-02-25
 tags:
    - AI

@@ -1,5 +1,5 @@
 ---
-title: 矢量数据库
+title: Spring AI矢量数据库
 date: 2025-02-27
 tags:
    - AI

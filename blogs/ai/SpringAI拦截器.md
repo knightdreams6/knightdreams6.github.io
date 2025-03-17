@@ -1,5 +1,5 @@
 ---
-title: 拦截器Advisors
+title: Spring AI拦截器Advisors
 date: 2025-02-25
 tags:
    - AI
