@@ -21,7 +21,7 @@ vi ~/.pip/pip.conf （.表示是隐藏文件夹）
 
 pip.conf
 
-```conf
+```text
 [global]
 index-url = http://mirrors.aliyun.com/pypi/simple/
 [install]

@@ -1,5 +1,5 @@
 .idea
-.vuepress/.cache
-.vuepress/.temp
-.vuepress/dist
+.vitepress/.cache
+.vitepress/.temp
+.vitepress/dist
 node_modules

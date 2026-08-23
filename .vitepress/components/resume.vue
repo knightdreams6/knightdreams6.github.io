@@ -3,7 +3,7 @@
     <a :href="resumePdf" target="_blank">点击查看附件简历</a>
     <h3>以下为简历中提到做过的部分项目/模块示例：</h3>
     <div>
-      <h5>Whistle短视频直播</h5>
+      <h5>海外短视频直播</h5>
       <el-carousel :autoplay="false" height="800px" arrow="always">
         <el-carousel-item v-for="item in whistleAppImgSrcList" :key="item">
           <el-image :hide-on-click-modal="true" :src="item"

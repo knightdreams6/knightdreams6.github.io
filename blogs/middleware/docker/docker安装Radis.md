@@ -40,7 +40,7 @@ docker run -d --name redis -v /docker/redis/conf/:/usr/local/etc/redis -v /docke
 
 ##### 配置文件
 
-```conf
+```text
 # Redis configuration file example.
 #
 # Note that in order to read the configuration file, Redis must be

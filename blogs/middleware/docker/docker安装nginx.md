@@ -19,7 +19,7 @@ mkdir -p /home/nginx/www /home/nginx/logs /home/nginx/conf /home/nginx/conf.d
 
 **/home/nginx/conf/nginx.conf**
 
-```conf
+```text
 user  nginx;
 worker_processes  1;
 
@@ -55,7 +55,7 @@ http {
 
 **/home/nginx/conf.d/default.conf**
 
-```conf
+```text
 server {
     listen       80;
     server_name  localhost;

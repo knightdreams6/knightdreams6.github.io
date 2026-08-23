@@ -15,7 +15,7 @@ mkdir -p /home/mysql/slave1/data
 
 > 默认的my.cnf配置文件
 
-```cnf
+```text
 # The MySQL  Server configuration file.
 #
 # For explanations see
@@ -33,7 +33,7 @@ secure-file-priv= NULL
 
 > 从服务器配置文件
 
-```cnf
+```text
 vim /home/mysql/master/my.cnf
 
 在默认的配置文件后添加
@@ -45,7 +45,7 @@ relay_log_recovery=0
 
 > 主服务器配置文件
 
-```cnf
+```text
 server-id=100
 innodb_flush_log_at_trx_commit=2
 sync_binlog=1

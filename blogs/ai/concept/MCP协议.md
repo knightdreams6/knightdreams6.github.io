@@ -3,6 +3,8 @@ title: MCP 协议
 date: 2025-04-01 21:25:00
 tags:
    - AI
+
+description: MCP 是一种用于连接 AI 模型与外部数据源、工具和服务的开放协议。
 ---
 
 
